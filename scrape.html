@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IARE Scrape | Professional PDF Viewer</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Light Theme Variables */
+      --light-bg: #f8f9fa;
+      --light-bg-secondary: #ffffff;
+      --light-sidebar: #f0f4f8;
+      --light-text: #2d3748;
+      --light-text-secondary: #4a5568;
+      --light-border: #e2e8f0;
+      --light-primary: #4361ee;
+      --light-primary-hover: #3a56e0;
+      --light-accent: #7209b7;
+      --light-accent-hover: #6008a0;
+      --light-success: #38a169;
+      --light-warning: #d69e2e;
+      --light-danger: #e53e3e;
+      --light-shadow: rgba(0, 0, 0, 0.1);
+      --light-card: #ffffff;
+
+      /* Dark Theme Variables */
+      --dark-bg: #0f172a;
+      --dark-bg-secondary: #1e293b;
+      --dark-sidebar: #0f172a;
+      --dark-text: #f1f5f9;
+      --dark-text-secondary: #cbd5e1;
+      --dark-border: #334155;
+      --dark-primary: #60a5fa;
+      --dark-primary-hover: #3b82f6;
+      --dark-accent: #a78bfa;
+      --dark-accent-hover: #8b5cf6;
+      --dark-success: #4ade80;
+      --dark-warning: #fcd34d;
+      --dark-danger: #f87171;
+      --dark-shadow: rgba(0, 0, 0, 0.3);
+      --dark-card: #1e293b;
+
+      /* Common Variables */
+      --transition-speed: 0.3s;
+      --transition-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --border-radius: 12px;
+      --border-radius-sm: 8px;
+      --spacing-xs: 0.5rem;
+      --spacing-sm: 0.75rem;
+      --spacing: 1rem;
+      --spacing-md: 1.5rem;
+      --spacing-lg: 2rem;
+      --spacing-xl: 3rem;
+      --sidebar-width: 320px;
+    }
+
+    [data-theme="light"] {
+      --bg: var(--light-bg);
+      --bg-secondary: var(--light-bg-secondary);
+      --sidebar: var(--light-sidebar);
+      --text: var(--light-text);
+      --text-secondary: var(--light-text-secondary);
+      --border: var(--light-border);
+      --primary: var(--light-primary);
+      --primary-hover: var(--light-primary-hover);
+      --accent: var(--light-accent);
+      --accent-hover: var(--light-accent-hover);
+      --success: var(--light-success);
+      --warning: var(--light-warning);
+      --danger: var(--light-danger);
+      --shadow: var(--light-shadow);
+      --card: var(--light-card);
+    }
+
+    [data-theme="dark"] {
+      --bg: var(--dark-bg);
+      --bg-secondary: var(--dark-bg-secondary);
+      --sidebar: var(--dark-sidebar);
+      --text: var(--dark-text);
+      --text-secondary: var(--dark-text-secondary);
+      --border: var(--dark-border);
+      --primary: var(--dark-primary);
+      --primary-hover: var(--dark-primary-hover);
+      --accent: var(--dark-accent);
+      --accent-hover: var(--dark-accent-hover);
+      --success: var(--dark-success);
+      --warning: var(--dark-warning);
+      --danger: var(--dark-danger);
+      --shadow: var(--dark-shadow);
+      --card: var(--dark-card);
+    }
+
+    /* Animation Keyframes */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideInLeft {
+      from { opacity: 0; transform: translateX(-20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes slideInRight {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.02); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -468px 0; }
+      100% { background-position: 468px 0; }
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+      100% { transform: translateY(0px); }
+    }
+
+    @keyframes logoFloat {
+      0% { transform: translateY(0px) rotate(0deg); }
+      25% { transform: translateY(-3px) rotate(-2deg); }
+      50% { transform: translateY(-5px) rotate(0deg); }
+      75% { transform: translateY(-3px) rotate(2deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes shineEffect {
+      0% { background-position: -100%; }
+      100% { background-position: 200%; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      70% { transform: scale(1.05); opacity: 1; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes expand {
+      from { transform: scale(0.95); opacity: 0.8; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Global Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      transition: background-color var(--transition-speed), 
+                  color var(--transition-speed);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Layout Structure */
+    .app-container {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-template-rows: auto 1fr;
+      grid-template-areas: 
+        "sidebar header"
+        "sidebar main";
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Header Styles */
+    .app-header {
+      grid-area: header;
+      background-color: var(--bg-secondary);
+      padding: var(--spacing) var(--spacing-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 15px var(--shadow);
+      z-index: 10;
+      height: 70px;
+      transition: background-color var(--transition-speed), 
+                  box-shadow var(--transition-speed);
+      position: relative;
+    }
+
+    .header-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: var(--text);
+      transition: color var(--transition-speed);
+      animation: fadeIn 0.5s var(--transition-bounce);
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: calc(100vw - 180px);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing);
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.25rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s var(--transition-bounce);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background-color: rgba(128, 128, 128, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .theme-toggle:hover::before {
+      width: 40px;
+      height: 40px;
+    }
+
+    .theme-toggle:hover {
+      transform: rotate(15deg);
+    }
+
+    .theme-toggle:active {
+      transform: rotate(30deg) scale(0.95);
+    }
+
+    /* Sidebar Styles */
+    .sidebar {
+      grid-area: sidebar;
+      background-color: var(--sidebar);
+      width: var(--sidebar-width);
+      padding: var(--spacing-md);
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      z-index: 100;
+      transition: transform 0.3s ease, background-color var(--transition-speed);
+      box-shadow: 3px 0 15px var(--shadow);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing);
+      padding: var(--spacing) 0 var(--spacing-lg);
+      margin-bottom: var(--spacing);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-container {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      perspective: 500px;
+    }
+
+    .logo {
+      width: 50px;
+      height: 50px;
+      border-radius: 15px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-weight: 700;
+      font-size: 1.4rem;
+      box-shadow: 
+        0 8px 20px rgba(0, 0, 0, 0.2),
+        inset 0 2px 5px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      animation: logoFloat 5s infinite ease-in-out;
+    }
+
+    .logo::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: linear-gradient(
+        90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.15), 
+        transparent
+      );
+      transform: rotate(30deg);
+      background-size: 50% 100%;
+      animation: shineEffect 3s infinite;
+    }
+
+    .logo span {
+      position: relative;
+      z-index: 2;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .logo::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0) 60%);
+      border-radius: 15px;
+    }
+
+    .logo-container:hover .logo {
+      transform: rotateY(10deg) rotateX(5deg);
+      box-shadow: 
+        -5px 8px 25px rgba(0, 0, 0, 0.3),
+        inset 0 2px 5px rgba(255, 255, 255, 0.3),
+        inset 0 -2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .site-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      position: relative;
+      transition: transform 0.3s ease;
+    }
+
+    .site-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      transition: width 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .site-title:hover::after {
+      width: 100%;
+    }
+
+    .sidebar-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.25rem;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-toggle::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      background-color: rgba(128, 128, 128, 0.1);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: width 0.5s, height 0.5s;
+    }
+
+    .sidebar-toggle:hover::before {
+      width: 40px;
+      height: 40px;
+    }
+
+    .sidebar-toggle:active {
+      transform: scale(0.95);
+    }
+
+    .sidebar-section {
+      margin-bottom: var(--spacing-lg);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .sidebar-section-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: var(--spacing);
+      position: relative;
+      display: inline-block;
+    }
+
+    .sidebar-section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      width: 30px;
+      height: 2px;
+      background-color: var(--primary);
+      border-radius: 2px;
+    }
+
+    /* Form Styles */
+    .form-group {
+      margin-bottom: var(--spacing-md);
+      transition: opacity 0.3s, transform 0.3s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: var(--spacing-xs);
+      font-weight: 500;
+      color: var(--text);
+      font-size: 0.9rem;
+      transition: color 0.2s;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: var(--spacing);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius-sm);
+      background-color: var(--bg-secondary);
+      color: var(--text);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .form-control::placeholder {
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+
+    .form-error {
+      color: var(--danger);
+      font-size: 0.875rem;
+      margin-top: var(--spacing-xs);
+      animation: fadeIn 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--spacing) var(--spacing-md);
+      border: none;
+      border-radius: var(--border-radius-sm);
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s;
+      gap: var(--spacing-xs);
+      font-family: inherit;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 0.5s;
+    }
+
+    .btn:active::after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+    }
+
+    .btn-primary:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-block {
+      width: 100%;
+    }
+
+    .btn-disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Main Content Styles */
+    .main-content {
+      grid-area: main;
+      padding: var(--spacing-lg);
+      overflow-y: auto;
+      transition: background-color var(--transition-speed);
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    .content-header {
+      margin-bottom: var(--spacing-lg);
+      animation: slideInRight 0.5s ease-out;
+    }
+
+    .content-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: var(--spacing-xs);
+      color: var(--text);
+      position: relative;
+      display: inline-block;
+    }
+
+    .content-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 40px;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+
+    .content-title:hover::after {
+      width: 100%;
+    }
+
+    .content-subtitle {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
+
+    /* PDF Viewer Styles */
+    .pdf-viewer {
+      background-color: var(--card);
+      border-radius: var(--border-radius);
+      overflow: hidden;
+      box-shadow: 0 5px 30px var(--shadow);
+      height: calc(100vh - 190px);
+      position: relative;
+      transition: background-color var(--transition-speed), box-shadow var(--transition-speed);
+      animation: expand 0.4s ease-out;
+    }
+
+    .pdf-viewer-header {
+      padding: var(--spacing-md);
+      background-color: rgba(96, 165, 250, 0.05);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.3s;
+    }
+
+    .pdf-title {
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+    }
+
+    .pdf-iframe {
+      width: 100%;
+      height: calc(100% - 60px);
+      border: none;
+      transition: opacity 0.3s;
+    }
+
+    .pdf-placeholder {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: calc(100% - 60px);
+      padding: var(--spacing-lg);
+      text-align: center;
+      color: var(--text-secondary);
+    }
+
+    .pdf-placeholder-icon {
+      font-size: 3.5rem;
+      margin-bottom: var(--spacing);
+      opacity: 0.4;
+      animation: float 3s ease-in-out infinite;
+      color: var(--primary);
+    }
+
+    .pdf-placeholder-title {
+      font-weight: 600;
+      font-size: 1.2rem;
+      margin-bottom: var(--spacing-xs);
+      color: var(--text);
+    }
+
+    .pdf-placeholder-text {
+      max-width: 500px;
+      line-height: 1.6;
+    }
+
+    .pdf-error {
+      background-color: rgba(248, 113, 113, 0.05);
+      border-radius: var(--border-radius);
+      padding: var(--spacing-md);
+      margin-top: var(--spacing);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing);
+      animation: bounceIn 0.5s var(--transition-bounce);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .pdf-error-icon {
+      font-size: 2.5rem;
+      color: var(--warning);
+      animation: blink 2s infinite;
+    }
+
+    .pdf-error-message {
+      font-weight: 500;
+      font-size: 1.1rem;
+      margin-bottom: var(--spacing-xs);
+      color: var(--text);
+      text-align: center;
+    }
+
+    .pdf-error-details {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    /* Week Selection */
+    .week-list {
+      display: grid;
+      gap: var(--spacing-xs);
+      margin-top: var(--spacing);
+    }
+
+    .week-item {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border);
+      border-radius: var(--border-radius-sm);
+      padding: var(--spacing);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-xs);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .week-item::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      background-image: radial-gradient(circle, rgba(255, 255, 255, 0.3) 10%, transparent 10.01%);
+      background-repeat: no-repeat;
+      background-position: 50%;
+      transform: scale(10, 10);
+      opacity: 0;
+      transition: transform 0.5s, opacity 0.5s;
+    }
+
+    .week-item:active::after {
+      transform: scale(0, 0);
+      opacity: 0.3;
+      transition: 0s;
+    }
+
+    .week-item:hover {
+      background-color: rgba(96, 165, 250, 0.05);
+      border-color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .week-item.active {
+      background-color: rgba(96, 165, 250, 0.1);
+      border-color: var(--primary);
+      position: relative;
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .week-item.active::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background-color: var(--primary);
+      border-radius: 4px 0 0 4px;
+    }
+
+    /* Loading Indicator */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: var(--spacing-lg);
+      flex-direction: column;
+      gap: var(--spacing);
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid rgba(96, 165, 250, 0.2);
+      border-radius: 50%;
+      border-top-color: var(--primary);
+      animation: spin 1s linear infinite;
+    }
+
+    .shimmer {
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0));
+      background-size: 600px 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+
+    /* Toast Notification */
+    .toast-container {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing);
+      pointer-events: none;
+    }
+
+    .toast {
+      min-width: 300px;
+      background-color: var(--card);
+      color: var(--text);
+      border-radius: var(--border-radius-sm);
+      box-shadow: 0 5px 20px var(--shadow);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      transform: translateX(400px);
+      opacity: 0;
+      transition: all 0.3s var(--transition-bounce);
+      pointer-events: auto;
+    }
+
+    .toast.show {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .toast-icon {
+      width: 50px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .toast-icon-info {
+      background-color: rgba(96, 165, 250, 0.1);
+      color: var(--primary);
+    }
+
+    .toast-icon-success {
+      background-color: rgba(74, 222, 128, 0.1);
+      color: var(--success);
+    }
+
+    .toast-icon-error {
+      background-color: rgba(248, 113, 113, 0.1);
+      color: var(--danger);
+    }
+
+    .toast-icon-warning {
+      background-color: rgba(252, 211, 77, 0.1);
+      color: var(--warning);
+    }
+
+    .toast-content {
+      flex: 1;
+      padding: var(--spacing) var(--spacing-md);
+    }
+
+    .toast-title {
+      font-weight: 600;
+      margin-bottom: 2px;
+      font-size: 0.9rem;
+    }
+
+    .toast-message {
+      color: var(--text-secondary);
+      font-size: 0.85rem;
+    }
+
+    .toast-progress {
+      height: 3px;
+      background-color: var(--primary);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      transform-origin: left;
+    }
+
+    /* Improved mobile responsive styles */
+    @media (max-width: 992px) {
+      .app-container {
+        grid-template-columns: 1fr;
+        grid-template-areas: 
+          "header"
+          "main";
+      }
+
+      .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        transform: translateX(-100%);
+        z-index: 1000;
+        width: min(85vw, 320px);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-toggle {
+        display: flex;
+      }
+
+      .backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s;
+        backdrop-filter: blur(2px);
+      }
+
+      .backdrop.show {
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .main-content {
+        padding: var(--spacing);
+      }
+
+      .content-header {
+        margin-bottom: var(--spacing);
+      }
+
+      .pdf-viewer {
+        height: calc(100vh - 170px);
+      }
+    }
+
+    @media (max-width: 576px) {
+      .app-header {
+        padding: var(--spacing);
+        height: 60px;
+      }
+
+      .logo {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+
+      .site-title {
+        font-size: 1.3rem;
+      }
+
+      .content-title {
+        font-size: 1.3rem;
+      }
+
+      .content-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .main-content {
+        padding: var(--spacing-sm);
+      }
+
+      .pdf-viewer {
+        height: calc(100vh - 140px);
+        margin-top: var(--spacing-sm);
+      }
+
+      .toast-container {
+        right: 10px;
+        bottom: 10px;
+        left: 10px;
+      }
+
+      .toast {
+        min-width: unset;
+        width: 100%;
+      }
+
+      .pdf-placeholder-icon {
+        font-size: 2.5rem;
+      }
+
+      .pdf-placeholder-title {
+        font-size: 1.1rem;
+      }
+
+      .pdf-placeholder-text {
+        font-size: 0.9rem;
+      }
+    }
+
+    /* Touch device optimizations */
+    @media (hover: none) {
+      .week-item:hover {
+        transform: none;
+        box-shadow: none;
+      }
+
+      .form-control:focus {
+        transform: none;
+      }
+
+      .btn-primary:hover {
+        transform: none;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Add active touch states */
+      .week-item:active {
+        background-color: rgba(96, 165, 250, 0.05);
+        border-color: var(--primary);
+      }
+
+      .btn-primary:active {
+        background-color: var(--primary-hover);
+        transform: scale(0.98);
+      }
+    }
+
+    /* Modern scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="backdrop" id="backdrop"></div>
+  
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="logo-container">
+          <div class="logo">
+            <span>IS</span>
+          </div>
+        </div>
+        <h1 class="site-title">IARE Scrape</h1>
+      </div>
+      
+      <div class="sidebar-section">
+        <h2 class="sidebar-section-title">Document Access</h2>
+        <form id="pdfForm">
+          <div class="form-group">
+            <label for="rollNumber" class="form-label">Roll Number</label>
+            <input type="text" id="rollNumber" class="form-control" placeholder="Enter your roll number" autocomplete="off">
+            <div id="rollNumberError" class="form-error"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="branch" class="form-label">Branch</label>
+            <select id="branch" class="form-control">
+              <option value="CSE">Computer Science Engineering</option>
+              <option value="IT">Information Technology</option>
+              <option value="AIML">Artificial Intelligence & Machine Learning</option>
+              <option value="DS">Data Science</option>
+              <option value="CS">Cyber Security</option>
+              <option value="ECE">Electronics & Communication</option>
+              <option value="EEE">Electrical & Electronics</option>
+              <option value="AERO">Aeronautical Engineering</option>
+              <option value="MECH">Mechanical Engineering</option>
+              <option value="CIVIL">Civil Engineering</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="semester" class="form-label">Semester</label>
+            <select id="semester" class="form-control">
+              <option value="SEM1">Semester 1</option>
+              <option value="SEM2">Semester 2</option>
+              <option value="SEM3">Semester 3</option>
+              <option value="SEM4" selected>Semester 4</option>
+              <option value="SEM5">Semester 5</option>
+              <option value="SEM6">Semester 6</option>
+              <option value="SEM7">Semester 7</option>
+              <option value="SEM8">Semester 8</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="courseCode" class="form-label">Course</label>
+            <select id="courseCode" class="form-control">
+              <!-- Options will be populated by JavaScript -->
+              <option value="">Select a course</option>
+            </select>
+          </div>
+          
+          <button type="submit" id="loadButton" class="btn btn-primary btn-block">
+            <i class="fas fa-search"></i> Search Documents
+          </button>
+        </form>
+      </div>
+      
+      <div class="sidebar-section" id="weekSelectorSection" style="display: none;">
+        <h2 class="sidebar-section-title">Select Week</h2>
+        <div id="weekList" class="week-list">
+          <!-- Week items will be populated by JavaScript -->
+        </div>
+      </div>
+    </aside>
+    
+    <!-- Header -->
+    <header class="app-header">
+      <button id="sidebarToggle" class="sidebar-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <div class="header-title" id="headerTitle">PDF Document Viewer</div>
+      <div class="header-actions">
+        <button id="themeToggle" class="theme-toggle" aria-label="Toggle Dark/Light Mode">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="content-header">
+        <h1 class="content-title">Document Viewer</h1>
+        <p class="content-subtitle">View your lab documents by selecting a week from the sidebar</p>
+      </div>
+      
+      <div class="pdf-viewer">
+        <div class="pdf-viewer-header">
+          <div class="pdf-title" id="pdfTitle">
+            <i class="fas fa-file-pdf"></i> No document selected
+          </div>
+        </div>
+        
+        <div id="pdfContainer" class="pdf-placeholder">
+          <i class="fas fa-file-pdf pdf-placeholder-icon"></i>
+          <h3 class="pdf-placeholder-title">No document selected</h3>
+          <p class="pdf-placeholder-text">Enter your roll number and select the course, then choose a week from the sidebar to view the document.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+  
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+  
+  <script>
+    // DOM Elements
+    const html = document.documentElement;
+    const themeToggle = document.getElementById('themeToggle');
+    const icon = themeToggle.querySelector('i');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const backdrop = document.getElementById('backdrop');
+    const pdfForm = document.getElementById('pdfForm');
+    const rollNumberInput = document.getElementById('rollNumber');
+    const rollNumberError = document.getElementById('rollNumberError');
+    const branchSelect = document.getElementById('branch');
+    const semesterSelect = document.getElementById('semester');
+    const courseCodeSelect = document.getElementById('courseCode');
+    const loadButton = document.getElementById('loadButton');
+    const weekSelectorSection = document.getElementById('weekSelectorSection');
+    const weekList = document.getElementById('weekList');
+    const pdfContainer = document.getElementById('pdfContainer');
+    const pdfTitle = document.getElementById('pdfTitle');
+    const headerTitle = document.getElementById('headerTitle');
+    const toastContainer = document.getElementById('toastContainer');
+    
+    // Theme Management
+    function initTheme() {
+      if (!localStorage.getItem('theme')) {
+        localStorage.setItem('theme', 'dark');
+        html.setAttribute('data-theme', 'dark');
+      } else {
+        const savedTheme = localStorage.getItem('theme');
+        html.setAttribute('data-theme', savedTheme);
+        
+        if (savedTheme === 'light') {
+          icon.classList.replace('fa-moon', 'fa-sun');
+        }
+      }
+    }
+    
+    function toggleTheme() {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      if (newTheme === 'light') {
+        icon.classList.replace('fa-moon', 'fa-sun');
+      } else {
+        icon.classList.replace('fa-sun', 'fa-moon');
+      }
+      
+      showToast({
+        title: 'Theme Changed',
+        message: `Switched to ${newTheme} mode`,
+        type: 'info'
+      });
+    }
+    
+    // Enhanced Toast Notification System
+    function showToast({ title, message, type = 'info', duration = 4000 }) {
+      const toast = document.createElement('div');
+      toast.className = 'toast';
+      
+      // Generate unique ID for this toast
+      const toastId = 'toast-' + Date.now();
+      toast.id = toastId;
+      
+      let iconClass = 'fa-info-circle';
+      let iconType = 'info';
+      
+      if (type === 'success') {
+        iconClass = 'fa-check-circle';
+        iconType = 'success';
+      } else if (type === 'error') {
+        iconClass = 'fa-exclamation-circle';
+        iconType = 'error';
+      } else if (type === 'warning') {
+        iconClass = 'fa-exclamation-triangle';
+        iconType = 'warning';
+      }
+      
+      toast.innerHTML = `
+        <div class="toast-icon toast-icon-${iconType}">
+          <i class="fas ${iconClass}"></i>
+        </div>
+        <div class="toast-content">
+          <div class="toast-title">${title}</div>
+          <div class="toast-message">${message}</div>
+        </div>
+        <div class="toast-progress"></div>
+      `;
+      
+      toastContainer.appendChild(toast);
+      
+      // Animate the progress bar
+      const progressBar = toast.querySelector('.toast-progress');
+      progressBar.style.animation = `shrink ${duration}ms linear forwards`;
+      
+      // Show the toast with a slight delay for better animation
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 10);
+      
+      // Remove the toast after duration
+      setTimeout(() => {
+        toast.classList.remove('show');
+        
+        // Remove from DOM after animation completes
+        setTimeout(() => {
+          const toastToRemove = document.getElementById(toastId);
+          if (toastToRemove) {
+            toastToRemove.remove();
+          }
+        }, 300);
+      }, duration);
+    }
+    
+    // Mobile Sidebar Toggle
+    function toggleSidebar() {
+      sidebar.classList.toggle('open');
+      backdrop.classList.toggle('show');
+    }
+    
+    // Document Fetching
+    function showLoading() {
+      loadButton.disabled = true;
+      loadButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Searching...';
+    }
+    
+    function hideLoading() {
+      loadButton.disabled = false;
+      loadButton.innerHTML = '<i class="fas fa-search"></i> Search Documents';
+    }
+    
+    function showWeekSelector() {
+      weekSelectorSection.style.display = 'block';
+      
+      // Animate in each week item
+      const weekItems = weekList.querySelectorAll('.week-item');
+      weekItems.forEach((item, index) => {
+        item.style.animation = `slideInLeft ${0.2 + index * 0.05}s ease-out forwards`;
+      });
+    }
+    
+    function populateWeeks() {
+      weekList.innerHTML = '';
+      
+      for (let i = 1; i <= 13; i++) {
+        const weekItem = document.createElement('div');
+        weekItem.className = 'week-item';
+        weekItem.innerHTML = `<i class="fas fa-file-alt"></i> Week ${i}`;
+        weekItem.dataset.week = i;
+        
+        weekItem.addEventListener('click', () => {
+          // Remove active class from all items
+          document.querySelectorAll('.week-item').forEach(item => {
+            item.classList.remove('active');
+          });
+          
+          // Add active class to clicked item
+          weekItem.classList.add('active');
+          
+          // Load the PDF for this week
+          loadPdf(i);
+        });
+        
+        weekList.appendChild(weekItem);
+      }
+    }
+    
+    function updateHeaderTitle(rollNumber, courseCode) {
+      // Get the course name from the selected option
+      const courseOption = courseCodeSelect.options[courseCodeSelect.selectedIndex];
+      const courseName = courseOption.text.split(' - ')[1];
+      
+      headerTitle.textContent = `${rollNumber} - ${courseName}`;
+    }
+    
+    // Enhanced loadPdf function with better error handling
+    function loadPdf(weekNumber) {
+      const rollNumber = rollNumberInput.value.trim();
+      const courseCode = courseCodeSelect.value;
+      
+      pdfTitle.innerHTML = `<i class="fas fa-file-pdf"></i> Week ${weekNumber}`;
+      
+      // Show loading state with animation
+      pdfContainer.innerHTML = `
+        <div class="loading">
+          <div class="spinner"></div>
+          <div>Loading document...</div>
+        </div>
+      `;
+      
+      // Generate URL using the exact structure
+      const baseURL = `https://iare-data.s3.ap-south-1.amazonaws.com/uploads/STUDENTS/${rollNumber}/LAB/SEM4/${courseCode}/`;
+      const pdfUrl = `${baseURL}${rollNumber}_week${weekNumber}.pdf`;
+      
+      // Create iframe
+      const iframe = document.createElement('iframe');
+      iframe.className = 'pdf-iframe';
+      iframe.src = pdfUrl;
+      iframe.title = `Week ${weekNumber}`;
+      
+      // Set up message passing for iframe error detection
+      window.addEventListener('message', handleIframeMessage);
+      
+      function handleIframeMessage(event) {
+        if (event.data && event.data.type === 'iframe-error' && event.data.url === pdfUrl) {
+          showPdfNotUploadedError(weekNumber);
+          window.removeEventListener('message', handleIframeMessage);
+        }
+      }
+      
+      // Handle load and error events
+      iframe.onload = function() {
+        // Check if we got an Access Denied XML error
+        setTimeout(() => {
+          try {
+            // If this is a PDF, we should see something in the contentDocument
+            // If it's an XML error page, we will be able to access it due to same-origin
+            // If it's a cross-origin PDF, this will throw an error which we catch
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            
+            // Check if the loaded content is an XML error
+            if (iframeDoc && 
+                (iframeDoc.body.textContent.includes('AccessDenied') || 
+                 iframeDoc.body.innerHTML.includes('<Error>') ||
+                 iframeDoc.body.innerHTML.includes('Access Denied'))) {
+              
+              showPdfNotUploadedError(weekNumber);
+            } else {
+              // Success - the PDF loaded
+              showToast({
+                title: 'Document Loaded',
+                message: `Week ${weekNumber} document loaded successfully`,
+                type: 'success',
+                duration: 3000
+              });
+            }
+          } catch (e) {
+            // If we get here, it's likely a cross-origin PDF that loaded successfully
+            showToast({
+              title: 'Document Loaded',
+              message: `Week ${weekNumber} document loaded successfully`,
+              type: 'success',
+              duration: 3000
+            });
+          }
+        }, 1000);
+      };
+      
+      iframe.onerror = function() {
+        showPdfNotUploadedError(weekNumber);
+      };
+      
+      // Clear container and add iframe - removed error checking for direct loading
+      setTimeout(() => {
+        pdfContainer.innerHTML = '';
+        pdfContainer.appendChild(iframe);
+        
+        // Inject script to report back errors
+        try {
+          iframe.contentWindow.postMessage(`
+            window.addEventListener('error', function() {
+              window.parent.postMessage({
+                type: 'iframe-error',
+                url: '${pdfUrl}'
+              }, '*');
+            });
+          `, '*');
+        } catch (e) {
+          // Ignore errors from cross-origin restrictions
+        }
+      }, 800);
+      
+      // Also update mobile sidebar (close sidebar on selection on mobile)
+      if (window.innerWidth < 992) {
+        toggleSidebar();
+      }
+    }
+    
+    // Show a user-friendly error when PDF is not available
+    function showPdfNotUploadedError(weekNumber) {
+      pdfContainer.innerHTML = `
+        <div class="pdf-placeholder">
+          <i class="fas fa-exclamation-circle pdf-placeholder-icon" style="color: var(--warning);"></i>
+          <h3 class="pdf-placeholder-title">Document Not Available</h3>
+          <p class="pdf-placeholder-text">User haven't uploaded this Week yet.</p>
+          
+          <div class="pdf-error">
+            <div class="pdf-error-icon">
+              <i class="fas fa-file-upload"></i>
+            </div>
+            <div class="pdf-error-message">Week ${weekNumber} hasn't been uploaded yet</div>
+            <div class="pdf-error-details">
+              The document you're looking for might be uploaded later. You can check back again or try accessing another week from the sidebar.
+            </div>
+          </div>
+        </div>
+      `;
+      
+      showToast({
+        title: 'Document Not Available',
+        message: `Week ${weekNumber} hasn't been uploaded yet`,
+        type: 'warning',
+        duration: 4000
+      });
+    }
+    
+    // Enhanced form submission handler with animations
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      
+      // Validate roll number with improved feedback
+      const rollNumber = rollNumberInput.value.trim();
+      
+      if (!rollNumber) {
+        rollNumberError.innerHTML = '<i class="fas fa-exclamation-circle"></i> Roll number is required';
+        rollNumberInput.focus();
+        return;
+      }
+      
+      if (!/^[a-zA-Z0-9]+$/.test(rollNumber)) {
+        rollNumberError.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please enter a valid alphanumeric roll number';
+        rollNumberInput.focus();
+        return;
+      }
+      
+      rollNumberError.textContent = '';
+      
+      // Show loading state with animation
+      showLoading();
+      
+      // Update header title with roll number and course
+      updateHeaderTitle(rollNumber, courseCodeSelect.value);
+      
+      // Simulate API check with hardcoded SEM4 for URL structure
+      setTimeout(() => {
+        // Populate week selector
+        populateWeeks();
+        
+        // Show week selector with animation
+        showWeekSelector();
+        
+        // Reset PDF viewer with a nice animation
+        pdfContainer.innerHTML = `
+          <div class="pdf-placeholder">
+            <i class="fas fa-hand-point-left pdf-placeholder-icon"></i>
+            <h3 class="pdf-placeholder-title">Select a Week</h3>
+            <p class="pdf-placeholder-text">Choose a week from the sidebar to view the corresponding document.</p>
+          </div>
+        `;
+        
+        pdfTitle.innerHTML = `<i class="fas fa-file-pdf"></i> No document selected`;
+        
+        // Reset loading state
+        hideLoading();
+        
+        showToast({
+          title: 'Ready to View Documents',
+          message: 'Select a week from the sidebar to view the document',
+          type: 'success'
+        });
+        
+        // Auto-scroll to the PDF viewer on mobile
+        if (window.innerWidth < 992) {
+          document.querySelector('.pdf-viewer').scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 1200); // Slightly longer delay for better UX
+    }
+    
+    // Event Listeners with enhanced interactions
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize theme
+      initTheme();
+      
+      // Theme toggle
+      themeToggle.addEventListener('click', toggleTheme);
+      
+      // Mobile sidebar toggle
+      sidebarToggle.addEventListener('click', toggleSidebar);
+      backdrop.addEventListener('click', toggleSidebar);
+      
+      // Form submission
+      pdfForm.addEventListener('submit', handleFormSubmit);
+      
+      // Enhanced Roll number validation
+      rollNumberInput.addEventListener('input', () => {
+        if (rollNumberError.textContent) {
+          rollNumberError.innerHTML = '';
+        }
+        
+        if (/^[a-zA-Z0-9]+$/.test(rollNumberInput.value.trim())) {
+          rollNumberInput.style.borderColor = 'var(--success)';
+        } else {
+          rollNumberInput.style.borderColor = '';
+        }
+      });
+      
+      // Add ripple effect to buttons
+      document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('btn') || e.target.closest('.btn')) {
+          const button = e.target.classList.contains('btn') ? e.target : e.target.closest('.btn');
+          
+          if (button.classList.contains('btn-disabled')) return;
+          
+          const rect = button.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          
+          const ripple = document.createElement('span');
+          ripple.style.position = 'absolute';
+          ripple.style.width = '1px';
+          ripple.style.height = '1px';
+          ripple.style.borderRadius = '50%';
+          ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.4)';
+          ripple.style.transform = 'scale(0)';
+          ripple.style.left = x + 'px';
+          ripple.style.top = y + 'px';
+          ripple.style.animation = 'ripple 0.6s linear';
+          ripple.style.pointerEvents = 'none';
+          
+          button.appendChild(ripple);
+          
+          setTimeout(() => {
+            ripple.remove();
+          }, 600);
+        }
+      });
+      
+      // Animate form elements on load with staggered timing
+      const formGroups = document.querySelectorAll('.form-group');
+      formGroups.forEach((group, index) => {
+        group.style.opacity = '0';
+        group.style.transform = 'translateY(10px)';
+        
+        setTimeout(() => {
+          group.style.opacity = '1';
+          group.style.transform = 'translateY(0)';
+        }, 100 + index * 100);
+      });
+      
+      // Animate the submit button separately
+      const submitButton = document.querySelector('.btn-primary');
+      submitButton.style.opacity = '0';
+      submitButton.style.transform = 'translateY(10px)';
+      
+      setTimeout(() => {
+        submitButton.style.opacity = '1';
+        submitButton.style.transform = 'translateY(0)';
+      }, 100 + formGroups.length * 100);
+      
+      // Add CSS for the progress bar and ripple animations
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes shrink {
+          0% { width: 100%; }
+          100% { width: 0%; }
+        }
+        
+        @keyframes ripple {
+          0% {
+            transform: scale(0);
+            opacity: 1;
+          }
+          100% {
+            transform: scale(200);
+            opacity: 0;
+          }
+        }
+      `;
+      document.head.appendChild(style);
+      
+      // Add hover effect for the logo
+      const logo = document.querySelector('.logo');
+      
+      logo.addEventListener('mousemove', function(e) {
+        const rect = this.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        // Calculate the rotation based on mouse position
+        const rotateX = (y / rect.height - 0.5) * 20;
+        const rotateY = (x / rect.width - 0.5) * -20;
+        
+        this.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      });
+      
+      logo.addEventListener('mouseleave', function() {
+        this.style.transform = '';
+      });
+    });
+    
+    // Enhanced window resize handler
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 992 && sidebar.classList.contains('open')) {
+        sidebar.classList.remove('open');
+        backdrop.classList.remove('show');
+      }
+      
+      // Update header title with ellipsis for small screens
+      const headerTitle = document.getElementById('headerTitle');
+      if (headerTitle.textContent.includes('-')) {
+        if (window.innerWidth < 576 && headerTitle.textContent.length > 25) {
+          const parts = headerTitle.textContent.split(' - ');
+          if (parts.length > 1) {
+            headerTitle.textContent = `${parts[0]} - ${parts[1].substring(0, 12)}...`;
+          }
+        }
+      }
+    });
+    
+    const courseData = {
+      "CSE": {
+        "SEM1": [
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AMED03", name: "Engineering Graphics" }
+        ],
+        "SEM2": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "AMED02", name: "Manufacturing Practice" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM3": [
+          { code: "ACSD10", name: "Operating Systems Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "AITD02", name: "Programming with Objects Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "ACSD16", name: "Design and Analysis of Algorithms Laboratory" },
+          { code: "ACSD17", name: "Web Systems Engineering Laboratory" },
+          { code: "AITD05", name: "Database Management Systems Laboratory" }
+        ]
+      },
+      "AIML": {
+        "SEM1": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AMED02", name: "Manufacturing Practice" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM2": [
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "AMED03", name: "Engineering Graphics" },
+          { code: "ACSD04", name: "Mobile Applications Development" }
+        ],
+        "SEM3": [
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "ACSD10", name: "Operating Systems Laboratory" },
+          { code: "AITD02", name: "Programming with Objects Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "AITD05", name: "Database Management Systems Laboratory" },
+          { code: "ACSD17", name: "Web Systems Engineering Laboratory" },
+          { code: "ACAD04", name: "Applied Artificial Intelligence Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      },
+      "DS": {
+        "SEM1": [
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AMED03", name: "Engineering Graphics" },
+          { code: "ACSD04", name: "Mobile Applications Development" }
+        ],
+        "SEM2": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "AMED02", name: "Manufacturing Practice" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM3": [
+          { code: "ACSD10", name: "Operating Systems Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "AITD02", name: "Programming with Objects Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "ACSD17", name: "Web Systems Engineering Laboratory" },
+          { code: "AITD05", name: "Database Management Systems Laboratory" },
+          { code: "ACDD04", name: "Data Handling and Visualizations Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      },
+      "CS": {
+        "SEM1": [
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AMED03", name: "Engineering Graphics" },
+          { code: "ACSD04", name: "Mobile Applications Development" }
+        ],
+        "SEM2": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "AMED02", name: "Manufacturing Practice" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM3": [
+          { code: "ACSD10", name: "Operating Systems Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "AITD02", name: "Programming with Objects Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "ACSD16", name: "Design and Analysis of Algorithms Laboratory" },
+          { code: "ACCD03", name: "Computer Networks Laboratory" },
+          { code: "AITD05", name: "Database Management Systems Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      },
+      "IT": {
+        "SEM1": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AMED02", name: "Manufacturing Practice" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM2": [
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "AMED03", name: "Engineering Graphics" },
+          { code: "ACSD04", name: "Mobile Applications Development" }
+        ],
+        "SEM3": [
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "AITD02", name: "Programming with Objects Laboratory" },
+          { code: "ACSD10", name: "Operating Systems Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "ACSD16", name: "Design and Analysis of Algorithms Laboratory" },
+          { code: "ACSD17", name: "Web Systems Engineering Laboratory" },
+          { code: "AITD05", name: "Database Management Systems Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      },
+      "AERO": {
+        "SEM1": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AMED01", name: "Engineering Workshop" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM2": [
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "AMED05", name: "Computer Aided Engineering Drawing" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "ACSD07", name: "Mobile and Web Applications Development" }
+        ],
+        "SEM3": [
+          { code: "AAED04", name: "Numerical Methods using MATLAB" },
+          { code: "AAED05", name: "Mechanics of Solids & Fluid Dynamics Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "AAED11", name: "Aerospace Structures Laboratory" },
+          { code: "AAED12", name: "Aerodynamics and Propulsion Laboratory" },
+          { code: "AAED13", name: "Aerospace Materials and Production Technology Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      },
+      "ECE": {
+        "SEM1": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AMED02", name: "Manufacturing Practice" },
+          { code: "AEED04", name: "Electrical Circuits Laboratory" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM2": [
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "AMED03", name: "Engineering Graphics" },
+          { code: "ACSD07", name: "Mobile and Web Applications Development" }
+        ],
+        "SEM3": [
+          { code: "AECD06", name: "Electronic Devices and Circuits Laboratory" },
+          { code: "AECD07", name: "Digital System Design Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "AECD14", name: "Analog Electronics Laboratory" },
+          { code: "AECD15", name: "Communication Systems Laboratory" },
+          { code: "AECD16", name: "Linear IC Applications Laboratory" },
+          { code: "AECD18", name: "System Design and Modeling" }
+        ]
+      },
+      "EEE": {
+        "SEM1": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AMED02", name: "Manufacturing Practice" },
+          { code: "AEED04", name: "Electrical Circuits Laboratory" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM2": [
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "AMED03", name: "Engineering Graphics" },
+          { code: "ACSD07", name: "Mobile and Web Applications Development" }
+        ],
+        "SEM3": [
+          { code: "AEED08", name: "Electrical Networks and Simulation Laboratory" },
+          { code: "AEED09", name: "DC Machines Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "AEED13", name: "AC Machines Laboratory" },
+          { code: "AEED14", name: "Control Systems Laboratory" },
+          { code: "AECD17", name: "Analog and Digital Circuits Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      },
+      "MECH": {
+        "SEM1": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AMED01", name: "Engineering Workshop" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM2": [
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "AMED05", name: "Computer Aided Engineering Drawing" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "ACSD07", name: "Mobile and Web Applications Development" }
+        ],
+        "SEM3": [
+          { code: "AMED09", name: "Solid Mechanics and Materials Laboratory" },
+          { code: "AMED10", name: "Manufacturing Processes Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "AMED16", name: "Thermal and Fluids Engineering Laboratory" },
+          { code: "AMED17", name: "Machine Drawing Laboratory" },
+          { code: "AMED18", name: "Machining Processes and Metrology Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      },
+      "CIVIL": {
+        "SEM1": [
+          { code: "AHSD04", name: "Professional Communication Laboratory" },
+          { code: "AEED03", name: "Electrical and Electronics Engineering Laboratory" },
+          { code: "ACSD02", name: "Object Oriented Programming with Java Laboratory" },
+          { code: "AMED01", name: "Engineering Workshop" },
+          { code: "ACSD03", name: "Essentials of Innovation" }
+        ],
+        "SEM2": [
+          { code: "AHSD05", name: "Engineering Chemistry Laboratory" },
+          { code: "AHSD09", name: "Applied Physics Laboratory" },
+          { code: "AMED05", name: "Computer Aided Engineering Drawing" },
+          { code: "ACSD06", name: "Programming for Problem Solving Laboratory" },
+          { code: "ACSD07", name: "Mobile and Web Applications Development" }
+        ],
+        "SEM3": [
+          { code: "ACED04", name: "Engineering Surveying Laboratory" },
+          { code: "ACED05", name: "Strength of Materials Laboratory" },
+          { code: "ACSD11", name: "Data Structures Laboratory" },
+          { code: "ACSD12", name: "Prototype and Design Building" }
+        ],
+        "SEM4": [
+          { code: "ACED11", name: "Concrete Materials Laboratory" },
+          { code: "ACED12", name: "Hydraulic Engineering Laboratory" },
+          { code: "ACED13", name: "Building Planning and Drawing Laboratory" },
+          { code: "ACSD18", name: "DevOps Engineer" }
+        ]
+      }
+    };
+
+    // Function to update course options based on branch and semester
+    function updateCourseOptions() {
+      const branch = branchSelect.value;
+      const semester = semesterSelect.value;
+      const courseSelect = document.getElementById('courseCode');
+      
+      // Clear existing options
+      courseSelect.innerHTML = '';
+      
+      // Check if we have courses for this branch and semester
+      if (courseData[branch] && courseData[branch][semester]) {
+        const courses = courseData[branch][semester];
+        
+        // Add options to select
+        courses.forEach(course => {
+          const option = document.createElement('option');
+          option.value = course.code;
+          option.textContent = `${course.code} - ${course.name}`;
+          courseSelect.appendChild(option);
+        });
+      } else {
+        // Add a placeholder if no courses available
+        const option = document.createElement('option');
+        option.value = '';
+        option.textContent = 'No courses available for this selection';
+        courseSelect.appendChild(option);
+      }
+    }
+
+    // Add this to your existing event listener setup
+    document.addEventListener('DOMContentLoaded', () => {
+      // Existing initialization code
+      // ...
+      
+      // Add event listeners for branch and semester changes
+      branchSelect.addEventListener('change', updateCourseOptions);
+      semesterSelect.addEventListener('change', updateCourseOptions);
+      
+      // Initialize course options on page load
+      updateCourseOptions();
+    });
+  </script>
+</body>
+</html>
